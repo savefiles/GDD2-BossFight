@@ -17,5 +17,6 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         InputSystem.Update();
+
     }
 }

@@ -11,13 +11,18 @@ public class Player : MonoBehaviour
     private PlayerInput pInput;
     private PlayerManager pManager;
     private GameManager gManager;
+    public Camera camera;
+
+    public Vector3 forwardVector { get; internal set; }
+    public float moveSpeed { get; internal set; } = 10.0f;
 
     // Start is called before the first frame update
     void Start()
     {
         // Instantiate variables.
-        pInput = new PlayerInput();
+        pInput = new PlayerInput(this);
         pManager = new PlayerManager();
+        forwardVector = gameObject.transform.right;
 
         // Get scene references.
         gManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -26,6 +31,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        pInput.Update();
     }
 }
