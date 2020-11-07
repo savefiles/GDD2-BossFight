@@ -17,6 +17,7 @@ public class PlayerInput
     InputActionMap m_actionMap;
     InputAction m_actionMove;
     InputAction m_actionLook;
+    InputAction m_actionShoot;
 
     public PlayerInput(Player player)
     {
@@ -47,6 +48,10 @@ public class PlayerInput
         m_actionLook = m_actionMap.AddAction("look");
         m_actionLook.AddBinding("<Mouse>/position");
 
+        m_actionShoot = m_actionMap.AddAction("shoot");
+        m_actionShoot.AddBinding("<Mouse>/leftButton");
+        m_actionShoot.started += ctx => { ShootBullet(); };
+
         // Enable the action map.
         m_actionMap.Enable();
     }
@@ -57,17 +62,31 @@ public class PlayerInput
         // Move the player and the camera.
         var input = m_actionMove.ReadValue<Vector2>();
         m_player.gameObject.transform.position += new Vector3(input.x, 0.0f, input.y) * m_player.moveSpeed * Time.deltaTime;
-        m_player.camera.transform.position += new Vector3(input.x, 0.0f, input.y) * m_player.moveSpeed * Time.deltaTime;
+        m_player.pCamera.transform.position += new Vector3(input.x, 0.0f, input.y) * m_player.moveSpeed * Time.deltaTime;
 
         // Calculate the rotation the player
         var mousePixelPos = m_actionLook.ReadValue<Vector2>();
-        var mouseWorldPos = m_player.camera.ScreenToWorldPoint(new Vector3(mousePixelPos.x, mousePixelPos.y, m_player.camera.nearClipPlane));
+        var mouseWorldPos = m_player.pCamera.ScreenToWorldPoint(new Vector3(mousePixelPos.x, mousePixelPos.y, m_player.pCamera.nearClipPlane));
         var forward = mouseWorldPos - m_player.gameObject.transform.position;
         var angle = Mathf.Atan2(forward.z, forward.x) * Mathf.Rad2Deg;
 
         // Set the forward vector and the rotation.
         m_player.forwardVector = new Vector3(forward.x, 0.0f, forward.z);
         m_player.gameObject.transform.localRotation = Quaternion.Euler(0, -angle, 0);
+    }
+
+    // Called from callback for shoot button.
+    private void ShootBullet()
+    {
+        // Calculate the new angle/forward vector.
+        var newForward = m_player.forwardVector.normalized;
+        var angle = Mathf.Atan2(newForward.z, newForward.x) * Mathf.Rad2Deg;
+
+        // Instantiate the prefab
+        GameObject newBullet = GameObject.Instantiate(m_player.prefabBullet, m_player.transform.position, Quaternion.Euler(0, -angle, 90));
+        
+        // Assign the forward vector.
+        newBullet.GetComponent<Projectile>().direction = m_player.forwardVector.normalized;
     }
 
 }

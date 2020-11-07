@@ -8,13 +8,23 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    // Private references
     private PlayerInput pInput;
     private PlayerManager pManager;
     private GameManager gManager;
-    public Camera camera;
 
-    public Vector3 forwardVector { get; internal set; }
-    public float moveSpeed { get; internal set; } = 10.0f;
+    // The camera that follows the player
+    public Camera pCamera;
+
+    // Prefabs
+    public GameObject prefabBullet;
+
+    // Physics and movement variables
+    public Vector3 forwardVector;
+    public float moveSpeed = 10.0f;
+
+    // Health related things
+    public float health = 10.0f;
 
     // Start is called before the first frame update
     void Start()
