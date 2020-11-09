@@ -18,6 +18,7 @@ public class PlayerInput
     InputAction m_actionMove;
     InputAction m_actionLook;
     InputAction m_actionShoot;
+    InputAction m_actionMelee;
 
     public PlayerInput(Player player)
     {
@@ -29,6 +30,10 @@ public class PlayerInput
     public void Update()
     {
         MovePlayer();
+        
+        // Skip these if the player is in an animation.
+        if(m_player.isInAnimation) { return; }
+        RotatePlayer();
     }
 
 
@@ -52,6 +57,10 @@ public class PlayerInput
         m_actionShoot.AddBinding("<Mouse>/leftButton");
         m_actionShoot.started += ctx => { ShootBullet(); };
 
+        m_actionMelee = m_actionMap.AddAction("melee");
+        m_actionMelee.AddBinding("<Mouse>/rightButton");
+        m_actionMelee.started += ctx => { MeleeAttack(); };
+
         // Enable the action map.
         m_actionMap.Enable();
     }
@@ -63,7 +72,10 @@ public class PlayerInput
         var input = m_actionMove.ReadValue<Vector2>();
         m_player.gameObject.transform.position += new Vector3(input.x, 0.0f, input.y) * m_player.moveSpeed * Time.deltaTime;
         m_player.pCamera.transform.position += new Vector3(input.x, 0.0f, input.y) * m_player.moveSpeed * Time.deltaTime;
+    }
 
+    private void RotatePlayer()
+    {
         // Calculate the rotation the player
         var mousePixelPos = m_actionLook.ReadValue<Vector2>();
         var mouseWorldPos = m_player.pCamera.ScreenToWorldPoint(new Vector3(mousePixelPos.x, mousePixelPos.y, m_player.pCamera.nearClipPlane));
@@ -78,6 +90,9 @@ public class PlayerInput
     // Called from callback for shoot button.
     private void ShootBullet()
     {
+        // Don't let them shoot mid melee
+        if (m_player.isInAnimation == true) return;
+
         // Calculate the new angle/forward vector.
         var newForward = m_player.forwardVector.normalized;
         var angle = Mathf.Atan2(newForward.z, newForward.x) * Mathf.Rad2Deg;
@@ -89,4 +104,14 @@ public class PlayerInput
         newBullet.GetComponent<Projectile>().direction = m_player.forwardVector.normalized;
     }
 
+
+    // Instantiate the melee weapon prefab.
+    private void MeleeAttack()
+    {
+        // Don't let them melee mid melee
+        if(m_player.isInAnimation == true) return;
+
+        GameObject.Instantiate(m_player.prefabMelee, m_player.transform);
+        m_player.isInAnimation = true;
+    }
 }

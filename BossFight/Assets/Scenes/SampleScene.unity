@@ -242,9 +242,8 @@ Transform:
   m_Children:
   - {fileID: 1760587981}
   - {fileID: 1030016535}
-  - {fileID: 1175038420}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &954992116
 GameObject:
@@ -575,8 +574,8 @@ GameObject:
   - component: {fileID: 1175038419}
   - component: {fileID: 1175038418}
   - component: {fileID: 1175038417}
-  m_Layer: 0
-  m_Name: Cylinder
+  m_Layer: 11
+  m_Name: Boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -654,8 +653,8 @@ Transform:
   m_LocalPosition: {x: -2.56, y: 0.5, z: -1.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 726301799}
-  m_RootOrder: 2
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1249009266
 GameObject:
@@ -670,7 +669,7 @@ GameObject:
   - component: {fileID: 1249009269}
   - component: {fileID: 1249009268}
   - component: {fileID: 1249009267}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -690,8 +689,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pCamera: {fileID: 963194227}
-  prefabBullet: {fileID: 5340208129897263785, guid: edc8f98490aaadf48aebe8887cea2900,
+  prefabBullet: {fileID: 631510856353527136, guid: c9ff842e0cd01104794a945af2d0b754,
     type: 3}
+  prefabMelee: {fileID: 1015504785955946688, guid: d6b30838863e0e84399f6675291ba839,
+    type: 3}
+  forwardVector: {x: 0, y: 0, z: 0}
+  moveSpeed: 10
+  isInAnimation: 0
+  health: 10
 --- !u!65 &1249009268
 BoxCollider:
   m_ObjectHideFlags: 0

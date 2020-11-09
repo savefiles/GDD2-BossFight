@@ -18,10 +18,12 @@ public class Player : MonoBehaviour
 
     // Prefabs
     public GameObject prefabBullet;
+    public GameObject prefabMelee;
 
     // Physics and movement variables
     public Vector3 forwardVector;
     public float moveSpeed = 10.0f;
+    public bool isInAnimation = false;          // Don't let the player rotate (or move?) while doing an animation.
 
     // Health related things
     public float health = 10.0f;
