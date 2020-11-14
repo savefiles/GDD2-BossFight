@@ -97,8 +97,11 @@ public class PlayerInput
         var newForward = m_player.forwardVector.normalized;
         var angle = Mathf.Atan2(newForward.z, newForward.x) * Mathf.Rad2Deg;
 
+        // Calculate the bullet position.
+        var bulletPos = m_player.transform.position + newForward;
+
         // Instantiate the prefab
-        GameObject newBullet = GameObject.Instantiate(m_player.prefabBullet, m_player.transform.position, Quaternion.Euler(0, -angle, 90));
+        GameObject newBullet = GameObject.Instantiate(m_player.prefabBullet, bulletPos, Quaternion.Euler(0, -angle, 90));
         
         // Assign the forward vector.
         newBullet.GetComponent<Projectile>().direction = m_player.forwardVector.normalized;

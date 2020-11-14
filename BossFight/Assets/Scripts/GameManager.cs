@@ -7,10 +7,26 @@ using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
+    // Simple simpleton instance.
+    public static GameManager instance;
+
+    // Public layers.
+    public const int SOLID_LAYER = 9;
+    public const int PLAYER_LAYER = 10;
+    public const int ENEMY_LAYER = 11;
+
+
+
+
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        // Make sure there's only one instance of this class.
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
     }
 
     // Update is called once per frame

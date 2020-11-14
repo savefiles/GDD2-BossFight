@@ -449,7 +449,8 @@ GameObject:
   - component: {fileID: 1030016534}
   - component: {fileID: 1030016533}
   - component: {fileID: 1030016532}
-  m_Layer: 0
+  - component: {fileID: 1030016536}
+  m_Layer: 9
   m_Name: Cylinder (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -531,6 +532,22 @@ Transform:
   m_Father: {fileID: 726301799}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1030016536
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1030016531}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1109517445
 GameObject:
   m_ObjectHideFlags: 0
@@ -574,6 +591,7 @@ GameObject:
   - component: {fileID: 1175038419}
   - component: {fileID: 1175038418}
   - component: {fileID: 1175038417}
+  - component: {fileID: 1175038421}
   m_Layer: 11
   m_Name: Boss
   m_TagString: Untagged
@@ -656,6 +674,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1175038421
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1175038416}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1249009266
 GameObject:
   m_ObjectHideFlags: 0
@@ -669,6 +703,7 @@ GameObject:
   - component: {fileID: 1249009269}
   - component: {fileID: 1249009268}
   - component: {fileID: 1249009267}
+  - component: {fileID: 1249009272}
   m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
@@ -771,6 +806,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1249009272
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249009266}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1292763398
 GameObject:
   m_ObjectHideFlags: 0
