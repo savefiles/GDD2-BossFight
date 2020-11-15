@@ -27,12 +27,36 @@ public class Projectile : MonoBehaviour
         // Increase lifetime, check if this object needs to be destroyed
         currentLifeSpan += dt;
         if(currentLifeSpan > maxLifeSpan)
-            Destroy(gameObject);
+            DestroyThis();
+    }
+
+    // When this object enters another collider, act accordingly.
+    private void OnTriggerEnter(UnityEngine.Collider other)
+    {
+        switch(other.gameObject.layer)
+        {
+            case GameManager.PLAYER_LAYER:
+                // Deal damage to the player
+                DestroyThis();
+                break;
+            case GameManager.ENEMY_LAYER:
+                // Deal damage to the boss
+                DestroyThis();
+                break;
+            case GameManager.SOLID_LAYER:
+                DestroyThis();
+                break;
+        }
     }
 
     private void Move(float dt)
     {
         velocity += acceleration * dt;                                  // Speed up based on acceleration.
         gameObject.transform.position += direction * (velocity * dt);   // Move the object.
+    }
+
+    private void DestroyThis()
+    {
+        Destroy(gameObject);
     }
 }
