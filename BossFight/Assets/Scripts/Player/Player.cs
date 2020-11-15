@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
     public bool isInAnimation = false;          // Don't let the player rotate (or move?) while doing an animation.
 
     // Health related things
-    public float health = 10.0f;
+    public float Health { get; private set; } = 10.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -45,5 +45,11 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         pInput.Update();
+    }
+
+    // As the name suggests, deal damage to the player.
+    public void TakeDamage(float damage)
+    {
+        Health -= damage;
     }
 }
