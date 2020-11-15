@@ -7,6 +7,7 @@ public class PlayerInput
 {
     // The player that this input is attached to.
     Player m_player;
+    Rigidbody m_pRigid;
 
     // The keyboard that is currently being used (might not be necessary)
     Keyboard m_keyboard;
@@ -18,9 +19,15 @@ public class PlayerInput
     InputAction m_actionShoot;
     InputAction m_actionMelee;
 
+    // Member variables.
+    Vector3 m_distToCamera = new Vector3(0.0f, 16.0f, 0.0f);
+    float m_forceMultiplier = 100.0f;
+
     public PlayerInput(Player player)
     {
         m_player = player;
+        m_pRigid = m_player.GetComponent<Rigidbody>();
+        
         m_keyboard = Keyboard.current;
         CreateInputMap();
     }
@@ -28,10 +35,22 @@ public class PlayerInput
     public void Update()
     {
         MovePlayer();
+
+        // The camera should be on top of the player
+        m_player.pCamera.transform.position = m_player.gameObject.transform.position + m_distToCamera;
+
+        // Limit the speed of the player.
+        if(m_pRigid.velocity.sqrMagnitude > Mathf.Pow(m_player.maxSpeed, 2))
+        {
+            m_pRigid.velocity = m_pRigid.velocity.normalized * m_player.maxSpeed;
+        }
         
+
         // Skip these if the player is in an animation.
-        if(m_player.isInAnimation) { return; }
+        if (m_player.isInAnimation) { return; }
         RotatePlayer();
+
+        
     }
 
 
@@ -68,8 +87,11 @@ public class PlayerInput
     {
         // Move the player and the camera.
         var input = m_actionMove.ReadValue<Vector2>();
-        m_player.gameObject.transform.position += new Vector3(input.x, 0.0f, input.y) * m_player.moveSpeed * Time.deltaTime;
-        m_player.pCamera.transform.position += new Vector3(input.x, 0.0f, input.y) * m_player.moveSpeed * Time.deltaTime;
+        m_player.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(input.x, 0.0f, input.y) 
+                                                               * m_player.moveSpeedModifier 
+                                                               * Time.deltaTime 
+                                                               * m_forceMultiplier, 
+                                                               ForceMode.VelocityChange);
     }
 
     private void RotatePlayer()

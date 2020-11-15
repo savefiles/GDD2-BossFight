@@ -22,7 +22,8 @@ public class Player : MonoBehaviour
 
     // Physics and movement variables
     public Vector3 forwardVector;
-    public float moveSpeed = 10.0f;
+    public float moveSpeedModifier = 1.0f;      // Is the player sped up or slowed down?
+    public float maxSpeed = 10.0f;              // Max velocity of the player.
     public bool isInAnimation = false;          // Don't let the player rotate (or move?) while doing an animation.
 
     // Health related things
@@ -41,7 +42,7 @@ public class Player : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         pInput.Update();
     }
