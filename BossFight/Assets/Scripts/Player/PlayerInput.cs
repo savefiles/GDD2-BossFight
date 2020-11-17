@@ -19,7 +19,14 @@ public class PlayerInput
     InputAction m_actionShoot;
     InputAction m_actionMelee;
 
+    // Action cooldowns (seconds)
+    float m_cooldownShootMin = 0.3f;
+    float m_cooldownShootCurr;
+    float m_cooldownMeleeMin = 1.0f;
+    float m_cooldownMeleeCurr;
+
     // Member variables.
+    bool m_isShooting = false;
     Vector3 m_distToCamera = new Vector3(0.0f, 16.0f, 0.0f);
     float m_forceMultiplier = 100.0f;
 
@@ -34,7 +41,18 @@ public class PlayerInput
 
     public void Update()
     {
+        float dt = Time.deltaTime;
+        UpdateCooldowns(dt);
+
         MovePlayer();
+
+        // If they are not shooting or are on cooldown, don't shoot.
+        if(m_isShooting && m_cooldownShootCurr > m_cooldownShootMin)
+        {
+            ShootBullet();
+            m_cooldownShootCurr = 0.0f;
+        }
+
 
         // The camera should be on top of the player
         m_player.pCamera.transform.position = m_player.gameObject.transform.position + m_distToCamera;
@@ -72,7 +90,8 @@ public class PlayerInput
 
         m_actionShoot = m_actionMap.AddAction("shoot");
         m_actionShoot.AddBinding("<Mouse>/leftButton");
-        m_actionShoot.started += ctx => { ShootBullet(); };
+        m_actionShoot.started += ctx => { m_isShooting = true; };
+        m_actionShoot.canceled += ctx => { m_isShooting = false; };
 
         m_actionMelee = m_actionMap.AddAction("melee");
         m_actionMelee.AddBinding("<Mouse>/rightButton");
@@ -111,7 +130,7 @@ public class PlayerInput
     private void ShootBullet()
     {
         // Don't let them shoot mid melee
-        if (m_player.isInAnimation == true) return;
+        if (m_player.isInAnimation) return;
 
         // Calculate the new angle/forward vector.
         var newForward = m_player.forwardVector.normalized;
@@ -137,4 +156,12 @@ public class PlayerInput
         GameObject.Instantiate(m_player.prefabMelee, m_player.transform);
         m_player.isInAnimation = true;
     }
+
+    // Helper function to update the cooldown member variables.
+    private void UpdateCooldowns(float dt)
+    {
+        m_cooldownShootCurr += dt;
+        m_cooldownMeleeCurr += dt;
+    }
+
 }
