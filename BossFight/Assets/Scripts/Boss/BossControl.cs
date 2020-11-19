@@ -32,11 +32,11 @@ public class BossControl : MonoBehaviour {
     //  Attack Pattern Variables
     private float patternACoolBase;
     private float patternACoolCurr;
-    private int patternASpeed;
+    private float patternASpeed;
 
     private float patternBCoolBase;
     private float patternBCoolCurr;
-    private int patternBSpeed;
+    private float patternBSpeed;
 
     //  Health Variables
     private int bossHealthBase;
@@ -45,6 +45,15 @@ public class BossControl : MonoBehaviour {
 
     //  Player Variables
     private GameObject playerRef;
+
+    private void Start() {
+        projContainer = transform.parent.GetChild(1).gameObject;
+
+        bossHealthBase = 100;
+        bossHealthCurr = bossHealthBase;
+
+        playerRef = GameObject.Find("Player");
+    }
 
     //  MainMethod - Update
     void Update() {
@@ -85,10 +94,10 @@ public class BossControl : MonoBehaviour {
             bossState = BossState.stateAmused;
 
             patternACoolBase = 3;
-            patternASpeed = 1;
+            patternASpeed = .01f;
 
             patternBCoolBase = 3;
-            patternBSpeed = 1;
+            patternBSpeed = .01f;
         }
 
         //  Part - State Annoyed
@@ -202,5 +211,10 @@ public class BossControl : MonoBehaviour {
         else {
             patternBCoolCurr -= Time.deltaTime;
         }
+    }
+
+    //  MainMethod - Take Damage (param Damage)
+    public void TakeDamage(int pDamage) {
+        bossHealthCurr -= pDamage;
     }
 }

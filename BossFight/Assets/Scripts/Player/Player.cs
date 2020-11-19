@@ -45,6 +45,7 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         pInput.Update();
+        Debug.Log(Health);
     }
 
     // As the name suggests, deal damage to the player.

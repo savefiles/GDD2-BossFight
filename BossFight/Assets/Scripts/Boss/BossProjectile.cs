@@ -36,4 +36,11 @@ public class BossProjectile : MonoBehaviour {
     private void MoveControl() {
         transform.position += new Vector3(projVect.x * projSpeed, 0, projVect.z * projSpeed);
     }
+
+    public void OnTriggerEnter(Collider other) {
+        if (other.transform.tag == "Player") {
+            other.transform.GetComponent<Player>().TakeDamage(projDamage);
+            Destroy(transform.gameObject);
+        }
+    }
 }
