@@ -1,9 +1,5 @@
 ﻿using UnityEngine;
 
-public enum ProjectileType {
-    typeProjA,
-}
-
 public class BossProjectile : MonoBehaviour {
     //  Combat Variables
     private int projDamage;
@@ -13,23 +9,18 @@ public class BossProjectile : MonoBehaviour {
     private float projSpeed;
 
     private float projHealth;
-    public float ProjHealth => projHealth;
 
-    void Start() {
-    }
-
-    public void SetupProjectile(ProjectileType pType, Vector3 pVect) {
+    //  MainMethod - Setup Projectile
+    public void SetupProjectile(Vector3 pVect, float pSpeed, int pDamage) {
         projVect = pVect;
-        projHealth = 5;
 
-        switch (pType) {
-            case ProjectileType.typeProjA:
-                projDamage = 1;
-                projSpeed = .01f;
-                break;
-        }
+        projHealth = 10;
+        projSpeed = pSpeed;
+
+        projDamage = pDamage;
     }
 
+    //  MainMethod - Update
     void Update() {
         if (projHealth > 0) {
             projHealth -= Time.deltaTime;
