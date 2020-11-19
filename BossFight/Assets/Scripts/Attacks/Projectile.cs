@@ -9,6 +9,7 @@ public class Projectile : MonoBehaviour
     public float velocity = 10.0f;
     public float acceleration = 0.0f;
     public float maxLifeSpan = 5.0f;                // Max amount of time before this bullet is destroyed.
+    public int damage = 10;                    // The amount of damage this projectile causes.
 
     private float currentLifeSpan = 0.0f;           // The amount of time this object has been alive.
 
@@ -40,7 +41,7 @@ public class Projectile : MonoBehaviour
                 DestroyThis();
                 break;
             case GameManager.ENEMY_LAYER:
-                // Deal damage to the boss
+                other.gameObject.GetComponent<BossControl>().TakeDamage(damage);
                 DestroyThis();
                 break;
             case GameManager.SOLID_LAYER:

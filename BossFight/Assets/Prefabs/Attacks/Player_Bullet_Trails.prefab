@@ -112,6 +112,7 @@ MonoBehaviour:
   velocity: 20
   acceleration: 0
   maxLifeSpan: 5
+  damage: 1
 --- !u!1 &4818755700081148261
 GameObject:
   m_ObjectHideFlags: 0
