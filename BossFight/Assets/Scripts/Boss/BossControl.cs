@@ -30,6 +30,8 @@ public class BossControl : MonoBehaviour {
     private GameObject temp;
 
     //  Attack Pattern Variables
+    private float projSpeedBase = .025f;
+
     private float patternACoolBase;
     private float patternACoolCurr;
     private float patternASpeed;
@@ -40,8 +42,13 @@ public class BossControl : MonoBehaviour {
 
     //  Health Variables
     private int bossHealthBase;
+<<<<<<< Updated upstream
+    public static int bossHealthCurr;
+    public static float bossHealthPer => (bossHealthCurr / bossHealthBase) * 100;
+=======
     private int bossHealthCurr;
-    private float bossHealthPer => (bossHealthCurr / bossHealthBase) * 100;
+    private float bossHealthPer => ((bossHealthCurr + 0.0f) / bossHealthBase * 100);
+>>>>>>> Stashed changes
 
     //  Player Variables
     private GameObject playerRef;
@@ -89,15 +96,17 @@ public class BossControl : MonoBehaviour {
 
     //  SubMethod of Update - Life Check
     private void LifeCheck() {
+        //Debug.Log(bossState + ": " + bossHealthPer + "(" + bossHealthCurr + "/" + bossHealthBase + ")");
+
         //  Part - State Amused
         if (bossHealthPer >= 90) {
             bossState = BossState.stateAmused;
 
             patternACoolBase = 3;
-            patternASpeed = .01f;
+            patternASpeed = 1 * projSpeedBase;
 
             patternBCoolBase = 3;
-            patternBSpeed = .01f;
+            patternBSpeed = 1 * projSpeedBase;
         }
 
         //  Part - State Annoyed
@@ -105,10 +114,10 @@ public class BossControl : MonoBehaviour {
             bossState = BossState.stateAnnoyed;
 
             patternACoolBase = 2;
-            patternASpeed = 1;
+            patternASpeed = 2 * projSpeedBase;
 
             patternBCoolBase = 3;
-            patternBSpeed = 2;
+            patternBSpeed = 2 * projSpeedBase;
         }
 
         //  Part - State Angry
@@ -116,10 +125,10 @@ public class BossControl : MonoBehaviour {
             bossState = BossState.stateAngry;
 
             patternACoolBase = 2;
-            patternASpeed = 2;
+            patternASpeed = 2 * projSpeedBase;
 
             patternBCoolBase = 3;
-            patternBSpeed = 3;
+            patternBSpeed = 3 * projSpeedBase;
         }
 
         //  Part - State Furious
@@ -127,21 +136,21 @@ public class BossControl : MonoBehaviour {
             bossState = BossState.stateFurious;
 
             patternACoolBase = 1;
-            patternASpeed = 2;
+            patternASpeed = 2 * projSpeedBase;
 
             patternBCoolBase = 2;
-            patternBSpeed = 3;
+            patternBSpeed = 3 * projSpeedBase;
         }
 
         //  Part - State Rage Monster
-        else if (bossHealthPer >= 10) {
+        else if (bossHealthPer <= 10) {
             bossState = BossState.stateRageMonster;
 
             patternACoolBase = 1;
-            patternASpeed = 3;
+            patternASpeed = 3 * projSpeedBase;
 
             patternBCoolBase = 1;
-            patternBSpeed = 3;
+            patternBSpeed = 3 * projSpeedBase;
         }
     }
 
