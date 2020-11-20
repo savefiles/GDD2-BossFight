@@ -40,8 +40,8 @@ public class BossControl : MonoBehaviour {
 
     //  Health Variables
     private int bossHealthBase;
-    public int bossHealthCurr;
-    public float bossHealthPer => (bossHealthCurr / bossHealthBase) * 100;
+    public static int bossHealthCurr;
+    public static float bossHealthPer => (bossHealthCurr / bossHealthBase) * 100;
 
     //  Player Variables
     private GameObject playerRef;
