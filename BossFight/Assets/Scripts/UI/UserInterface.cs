@@ -28,25 +28,25 @@ public class UserInterface : MonoBehaviour
     void Start()
     {
         // Get scene references.
-        gManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        player = GameObject.Find("Player");
-        phealth = player.Health;
-        Iphealth = player.Health;
-        boss = GameObject.Find("Boss");
-        bhealth = boss.ssHealthPer;
-        pHBarWidth = PlayerHealthBarValue;
-        IpHBarWidth = PlayerHealthBarValue;
-        bHBarWidth = BossHealthBarValue;
-        IbHBarWidth = BossHealthBarValue;
+        //gManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        //player = GameObject.Find("Player");
+        //phealth = player.Health;
+        //Iphealth = player.Health;
+        //boss = GameObject.Find("Boss");
+        //bhealth = boss.ssHealthPer;
+        //pHBarWidth = PlayerHealthBarValue;
+        //IpHBarWidth = PlayerHealthBarValue;
+        //bHBarWidth = BossHealthBarValue;
+        //IbHBarWidth = BossHealthBarValue;
     }
 
     // Update is called once per frame
     void Update()
     {
-        phealth = player.Health;
-        bhealth = boss.ssHealthPer;
+        //phealth = player.Health;
+        //bhealth = boss.ssHealthPer;
 
-        bHBarWidth = IbHBarWidth * bhealth;
-        pHBarWidth = IpHBarWidth * ((phealth / Iphealth) * 100);
+        //bHBarWidth = IbHBarWidth * bhealth;
+        //pHBarWidth = IpHBarWidth * ((phealth / Iphealth) * 100);
     }
 }

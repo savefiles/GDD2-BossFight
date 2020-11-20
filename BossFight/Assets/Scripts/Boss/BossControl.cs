@@ -41,14 +41,10 @@ public class BossControl : MonoBehaviour {
     private float patternBSpeed;
 
     //  Health Variables
-    private int bossHealthBase;
-<<<<<<< Updated upstream
+    private static int bossHealthBase;
     public static int bossHealthCurr;
     public static float bossHealthPer => (bossHealthCurr / bossHealthBase) * 100;
-=======
-    private int bossHealthCurr;
-    private float bossHealthPer => ((bossHealthCurr + 0.0f) / bossHealthBase * 100);
->>>>>>> Stashed changes
+
 
     //  Player Variables
     private GameObject playerRef;
