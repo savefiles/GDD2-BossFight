@@ -16,6 +16,10 @@ public class PlayerMelee : MonoBehaviour
     float m_fTotalRotation = 135.0f;         // Degrees
     float m_fTotalSwingTime = 0.5f;         // Seconds
 
+    // Damage related vars
+    int m_iDamage = 20;
+    bool m_bHasDealtDamage = false;
+
     // Calculated variables
     float m_fMiddleAngle;
     float m_fStartAngle;
@@ -80,5 +84,19 @@ public class PlayerMelee : MonoBehaviour
     private void RotatePlayer(float angle)
     {
         m_player.rotation = Quaternion.Euler(0, angle, 0);
+    }
+
+    // When this object enters another collider, act accordingly.
+    private void OnTriggerEnter(UnityEngine.Collider other)
+    {
+        if(m_bHasDealtDamage) return;
+
+        switch (other.gameObject.layer)
+        {
+            case GameManager.ENEMY_LAYER:
+                other.gameObject.GetComponent<BossControl>().TakeDamage(m_iDamage);
+                m_bHasDealtDamage = true;
+                break;
+        }
     }
 }
