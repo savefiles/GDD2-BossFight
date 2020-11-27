@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     // Prefabs
     public GameObject prefabBullet;
     public GameObject prefabMelee;
+    public GameObject prefabShield;
 
     // Physics and movement variables
     public Vector3 forwardVector;

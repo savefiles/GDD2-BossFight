@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 // Class that deals with the inputs regarding the player
 // - Movement, attacks, etc.
@@ -18,12 +19,16 @@ public class PlayerInput
     InputAction m_actionLook;
     InputAction m_actionShoot;
     InputAction m_actionMelee;
+    InputAction m_actionShield;
 
     // Action cooldowns (seconds)
     float m_cooldownShootMin = 0.3f;
     float m_cooldownShootCurr;
     float m_cooldownMeleeMin = 1.0f;
     float m_cooldownMeleeCurr;
+    float m_cooldownShieldMin = 3.0f;
+    float m_cooldownShieldDur = 1.0f;
+    float m_cooldownShieldCurr;
 
     // Member variables.
     bool m_isShooting = false;
@@ -97,6 +102,10 @@ public class PlayerInput
         m_actionMelee.AddBinding("<Mouse>/rightButton");
         m_actionMelee.started += ctx => { MeleeAttack(); };
 
+        m_actionShield = m_actionMap.AddAction("shield");
+        m_actionShield.AddBinding("<Keyboard>/q");
+        m_actionShield.started += ctx => { m_player.StartCoroutine(Shield()); };
+
         // Enable the action map.
         m_actionMap.Enable();
     }
@@ -157,11 +166,39 @@ public class PlayerInput
         m_player.isInAnimation = true;
     }
 
+    // Called from callback for shield button, is coroutine.
+    private IEnumerator Shield()
+    {
+        // Don't let them shield mid animation or until cooldown is over.
+        if (m_player.isInAnimation == true) yield break;
+        if (m_cooldownShieldCurr < m_cooldownShieldMin) yield break;
+        m_cooldownShieldCurr = 0.0f;
+
+        // Instatiate the shield prefab.
+        GameObject shield = GameObject.Instantiate(m_player.prefabShield, m_player.transform);
+
+        // Don't let the player move or act for the duration.
+        m_player.isInAnimation = true;
+        m_player.moveSpeedModifier = 0.0f;
+
+        // Wait until a certain time has passed, then destroy the shield.
+        yield return new WaitForSeconds(m_cooldownShieldDur);
+
+
+        // Destroy the shield
+        GameObject.Destroy(shield);
+
+        // Give the player control again.
+        m_player.isInAnimation = false;
+        m_player.moveSpeedModifier = 1.0f;
+    }
+
     // Helper function to update the cooldown member variables.
     private void UpdateCooldowns(float dt)
     {
         m_cooldownShootCurr += dt;
         m_cooldownMeleeCurr += dt;
+        m_cooldownShieldCurr += dt;
     }
 
 }

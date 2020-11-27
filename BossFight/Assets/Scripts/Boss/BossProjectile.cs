@@ -38,6 +38,11 @@ public class BossProjectile : MonoBehaviour {
     }
 
     public void OnTriggerEnter(Collider other) {
+        // If it collides with wall or shield, destroy.
+        if (other.gameObject.layer == GameManager.SOLID_LAYER)
+        {
+            Destroy(transform.gameObject);
+        }
         if (other.transform.tag == "Player") {
             other.transform.GetComponent<Player>().TakeDamage(projDamage);
             Destroy(transform.gameObject);
