@@ -14,39 +14,38 @@ public class UserInterface : MonoBehaviour
     private GameObject boss;
 
     // Health related things
-    private static float phealth;
-    private static float Iphealth;
-    private static int bhealth;
-    public float pHBarWidth;
-    public float bHBarWidth;
-    public int pHBarPer;
-    public int bHBarPer;
-    public float IpHBarWidth;
-    public float IbHBarWidth;
+    private GameObject phbar;
+    private float iPhealth;
+    private float cPhealth;
+    public float phBarPer;
+    private GameObject psbar;
+    private float iPshield;
+    private float cPshield;
+    public float psBarPer;
+    private GameObject bhbar;
+    private float iBhealth;
+    private float cBhealth;
+    public float bhBarPer;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        // Get scene references.
-        //gManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        //player = GameObject.Find("Player");
-        //phealth = player.Health;
-        //Iphealth = player.Health;
-        //boss = GameObject.Find("Boss");
-        //bhealth = boss.ssHealthPer;
-        //pHBarWidth = PlayerHealthBarValue;
-        //IpHBarWidth = PlayerHealthBarValue;
-        //bHBarWidth = BossHealthBarValue;
-        //IbHBarWidth = BossHealthBarValue;
+        phbar = GameObject.Find("PHBar");
+        psbar = GameObject.Find("PSBar");
+        bhbar = GameObject.Find("BHBar");
+        player = GameObject.Find("default");
+        boss = GameObject.Find("BossActual");
+        Debug.Log(iBhealth);
     }
 
     // Update is called once per frame
     void Update()
     {
-        //phealth = player.Health;
-        //bhealth = boss.ssHealthPer;
-
-        //bHBarWidth = IbHBarWidth * bhealth;
-        //pHBarWidth = IpHBarWidth * ((phealth / Iphealth) * 100);
+        phBarPer = player.GetComponent<Player>().playerHealthPer;
+        phbar.transform.localScale = new Vector3(phBarPer, 1f, 1f);
+        //psbar.transform.localScale = new Vector3(psBarPer, 1f, 1f);
+        bhBarPer = boss.GetComponent<BossControl>().bossHealthPer;
+        bhbar.transform.localScale = new Vector3(bhBarPer, 1f, 1f);
     }
 }
