@@ -36,6 +36,8 @@ public class BossControl : MonoBehaviour {
     private float patternACoolCurr;
     private float patternASpeed;
 
+    private int patternANum = 24;
+
     private float patternBCoolBase;
     private float patternBCoolCurr;
     private float patternBSpeed;
@@ -55,7 +57,7 @@ public class BossControl : MonoBehaviour {
         bossHealthBase = 100;
         bossHealthCurr = bossHealthBase;
 
-        playerRef = GameObject.Find("Player");
+        playerRef = GameObject.Find("Player").transform.GetChild(0).gameObject;
     }
 
     //  MainMethod - Update
@@ -110,10 +112,10 @@ public class BossControl : MonoBehaviour {
             bossState = BossState.stateAnnoyed;
 
             patternACoolBase = 2;
-            patternASpeed = 2 * projSpeedBase;
+            patternASpeed = 1.5f * projSpeedBase;
 
             patternBCoolBase = 3;
-            patternBSpeed = 2 * projSpeedBase;
+            patternBSpeed = 1.5f * projSpeedBase;
         }
 
         //  Part - State Angry
@@ -121,10 +123,10 @@ public class BossControl : MonoBehaviour {
             bossState = BossState.stateAngry;
 
             patternACoolBase = 2;
-            patternASpeed = 2 * projSpeedBase;
+            patternASpeed = 1.5f * projSpeedBase;
 
             patternBCoolBase = 3;
-            patternBSpeed = 3 * projSpeedBase;
+            patternBSpeed = 2 * projSpeedBase;
         }
 
         //  Part - State Furious
@@ -132,10 +134,10 @@ public class BossControl : MonoBehaviour {
             bossState = BossState.stateFurious;
 
             patternACoolBase = 1;
-            patternASpeed = 2 * projSpeedBase;
+            patternASpeed = 1.5f * projSpeedBase;
 
             patternBCoolBase = 2;
-            patternBSpeed = 3 * projSpeedBase;
+            patternBSpeed = 2 * projSpeedBase;
         }
 
         //  Part - State Rage Monster
@@ -143,10 +145,10 @@ public class BossControl : MonoBehaviour {
             bossState = BossState.stateRageMonster;
 
             patternACoolBase = 1;
-            patternASpeed = 3 * projSpeedBase;
+            patternASpeed = 2 * projSpeedBase;
 
             patternBCoolBase = 1;
-            patternBSpeed = 3 * projSpeedBase;
+            patternBSpeed = 2 * projSpeedBase;
         }
     }
 
@@ -155,37 +157,12 @@ public class BossControl : MonoBehaviour {
         if (patternACoolCurr <= 0) {
             patternACoolCurr = patternACoolBase;
 
-            //  Part - S Projectile
-            temp = Instantiate(projPrefab, transform.position, Quaternion.identity, projContainer.transform);
-            temp.GetComponent<BossProjectile>().SetupProjectile(new Vector3(0, 0, 1), patternASpeed, 1);
+            float projAngle = 360 / patternANum;
 
-            //  Part - SE Projectile
-            temp = Instantiate(projPrefab, transform.position, Quaternion.identity, projContainer.transform);
-            temp.GetComponent<BossProjectile>().SetupProjectile(new Vector3(.5f, 0, .5f), patternASpeed, 1);
-
-            //  Part - E Projectile
-            temp = Instantiate(projPrefab, transform.position, Quaternion.identity, projContainer.transform);
-            temp.GetComponent<BossProjectile>().SetupProjectile(new Vector3(1, 0, 0), patternASpeed, 1);
-
-            //  Part - NE Projectile
-            temp = Instantiate(projPrefab, transform.position, Quaternion.identity, projContainer.transform);
-            temp.GetComponent<BossProjectile>().SetupProjectile(new Vector3(.5f, 0, -.5f), patternASpeed, 1);
-
-            //  Part - N Projectile
-            temp = Instantiate(projPrefab, transform.position, Quaternion.identity, projContainer.transform);
-            temp.GetComponent<BossProjectile>().SetupProjectile(new Vector3(0, 0, -1), patternASpeed, 1);
-
-            //  Part - NW Projectile
-            temp = Instantiate(projPrefab, transform.position, Quaternion.identity, projContainer.transform);
-            temp.GetComponent<BossProjectile>().SetupProjectile(new Vector3(-.5f, 0, -.5f), patternASpeed, 1);
-
-            //  Part - W Projectile
-            temp = Instantiate(projPrefab, transform.position, Quaternion.identity, projContainer.transform);
-            temp.GetComponent<BossProjectile>().SetupProjectile(new Vector3(-1, 0, 0), patternASpeed, 1);
-
-            //  Part - SW Projectile
-            temp = Instantiate(projPrefab, transform.position, Quaternion.identity, projContainer.transform);
-            temp.GetComponent<BossProjectile>().SetupProjectile(new Vector3(-.5f, 0, .5f), patternASpeed, 1);
+            for (int i = 0; i < patternANum; i++) {
+                temp = Instantiate(projPrefab, transform.position, Quaternion.identity, projContainer.transform);
+                temp.GetComponent<BossProjectile>().SetupProjectile(new Vector3(Mathf.Cos(i * projAngle), 0, Mathf.Sin(i * projAngle)), patternASpeed, 1);
+            }
         }
 
         else {
