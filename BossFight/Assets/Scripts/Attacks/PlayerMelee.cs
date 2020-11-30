@@ -13,7 +13,7 @@ public class PlayerMelee : MonoBehaviour
     Transform m_player;
 
     // Properties of the swing
-    float m_fTotalRotation = 135.0f;         // Degrees
+    float m_fTotalRotation = 90.0f;         // Degrees
     float m_fTotalSwingTime = 0.5f;         // Seconds
 
     // Damage related vars
