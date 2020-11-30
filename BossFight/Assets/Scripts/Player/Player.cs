@@ -28,7 +28,10 @@ public class Player : MonoBehaviour
     public bool isInAnimation = false;          // Don't let the player rotate (or move?) while doing an animation.
 
     // Health related things
-    public static float Health { get; private set; } = 10.0f;
+    public float playerHealthBase;
+    public float playerHealthCurr;
+    public float playerHealthPer => (playerHealthCurr / playerHealthBase);
+    public float Health { get; private set; } = 10.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -37,9 +40,12 @@ public class Player : MonoBehaviour
         pInput = new PlayerInput(this);
         pManager = new PlayerManager();
         forwardVector = gameObject.transform.right;
+        
+        playerHealthBase = 10;
+        playerHealthCurr = playerHealthBase;
 
-        // Get scene references.
-        gManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+    // Get scene references.
+    gManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -53,5 +59,6 @@ public class Player : MonoBehaviour
     public void TakeDamage(float damage)
     {
         Health -= damage;
+        //Debug.Log("oof");
     }
 }
