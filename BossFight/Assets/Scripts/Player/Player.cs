@@ -9,7 +9,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     // Private references
-    private PlayerInput pInput;
+    public PlayerInput pInput;
     private PlayerManager pManager;
     private GameManager gManager;
 
@@ -52,13 +52,12 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         pInput.Update();
-        Debug.Log(Health);
     }
 
     // As the name suggests, deal damage to the player.
     public void TakeDamage(float damage)
     {
-        Health -= damage;
+        playerHealthCurr -= damage;
         //Debug.Log("oof");
     }
 }

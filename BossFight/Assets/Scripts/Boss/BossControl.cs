@@ -97,7 +97,7 @@ public class BossControl : MonoBehaviour {
         //Debug.Log(bossState + ": " + bossHealthPer + "(" + bossHealthCurr + "/" + bossHealthBase + ")");
 
         //  Part - State Amused
-        if (bossHealthPer >= 90) {
+        if (bossHealthPer >= 0.90f) {
             bossState = BossState.stateAmused;
 
             patternACoolBase = 3;
@@ -108,7 +108,7 @@ public class BossControl : MonoBehaviour {
         }
 
         //  Part - State Annoyed
-        else if (bossHealthPer >= 70) {
+        else if (bossHealthPer >= 0.70f) {
             bossState = BossState.stateAnnoyed;
 
             patternACoolBase = 2;
@@ -119,7 +119,7 @@ public class BossControl : MonoBehaviour {
         }
 
         //  Part - State Angry
-        else if (bossHealthPer >= 50) {
+        else if (bossHealthPer >= 0.50f) {
             bossState = BossState.stateAngry;
 
             patternACoolBase = 2;
@@ -130,7 +130,7 @@ public class BossControl : MonoBehaviour {
         }
 
         //  Part - State Furious
-        else if (bossHealthPer >= 30) {
+        else if (bossHealthPer >= 0.30f) {
             bossState = BossState.stateFurious;
 
             patternACoolBase = 1;
@@ -141,7 +141,7 @@ public class BossControl : MonoBehaviour {
         }
 
         //  Part - State Rage Monster
-        else if (bossHealthPer <= 10) {
+        else if (bossHealthPer <= 0.10f) {
             bossState = BossState.stateRageMonster;
 
             patternACoolBase = 1;

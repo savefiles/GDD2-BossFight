@@ -29,6 +29,8 @@ public class PlayerInput
     float m_cooldownShieldMin = 3.0f;
     float m_cooldownShieldDur = 1.0f;
     float m_cooldownShieldCurr;
+    public float ShieldCooldown => Mathf.Min(m_cooldownShieldCurr/m_cooldownShieldMin, 1.0f);
+
 
     // Member variables.
     bool m_isShooting = false;
