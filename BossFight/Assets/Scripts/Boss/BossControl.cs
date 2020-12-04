@@ -30,17 +30,13 @@ public class BossControl : MonoBehaviour {
     private GameObject temp;
 
     //  Attack Pattern Variables
-    private float projSpeedBase = .025f;
+    private float projSpeedBase = .045f;
 
     private float patternACoolBase;
     private float patternACoolCurr;
-    private float patternASpeed;
-
-    private int patternANum = 24;
 
     private float patternBCoolBase;
     private float patternBCoolCurr;
-    private float patternBSpeed;
 
     //  Health Variables
     public float bossHealthBase;
@@ -66,28 +62,23 @@ public class BossControl : MonoBehaviour {
 
         switch (bossState) {
             case BossState.stateAmused:
-                AttackPatternA();
-                AttackPatternB();
+                AttackPatternA(1, 12);
                 break;
 
             case BossState.stateAnnoyed:
-                AttackPatternA();
-                AttackPatternB();
+                AttackPatternA(1, 24);
                 break;
 
             case BossState.stateAngry:
-                AttackPatternA();
-                AttackPatternB();
+                AttackPatternA(2, 12);
                 break;
 
             case BossState.stateFurious:
-                AttackPatternA();
-                AttackPatternB();
+                AttackPatternA(2, 24);
                 break;
 
             case BossState.stateRageMonster:
-                AttackPatternA();
-                AttackPatternB();
+                AttackPatternA(3, 24);
                 break;
         }
     }
@@ -98,70 +89,79 @@ public class BossControl : MonoBehaviour {
 
         //  Part - State Amused
         if (bossHealthPer >= 0.90f) {
+            patternACoolBase = 2;
+
             bossState = BossState.stateAmused;
-
-            patternACoolBase = 3;
-            patternASpeed = 1 * projSpeedBase;
-
-            patternBCoolBase = 3;
-            patternBSpeed = 1 * projSpeedBase;
         }
 
         //  Part - State Annoyed
         else if (bossHealthPer >= 0.70f) {
+            patternACoolBase = 3;
+
+            if (bossState == BossState.stateAmused) {
+                patternACoolCurr = patternACoolBase;
+            }
+
             bossState = BossState.stateAnnoyed;
-
-            patternACoolBase = 2;
-            patternASpeed = 1.5f * projSpeedBase;
-
-            patternBCoolBase = 3;
-            patternBSpeed = 1.5f * projSpeedBase;
         }
 
         //  Part - State Angry
         else if (bossHealthPer >= 0.50f) {
-            bossState = BossState.stateAngry;
-
             patternACoolBase = 2;
-            patternASpeed = 1.5f * projSpeedBase;
 
-            patternBCoolBase = 3;
-            patternBSpeed = 2 * projSpeedBase;
+            if (bossState == BossState.stateAnnoyed) {
+                patternACoolCurr = patternACoolBase;
+            }
+
+            bossState = BossState.stateAngry;
         }
 
         //  Part - State Furious
         else if (bossHealthPer >= 0.30f) {
+            patternACoolBase = 3;
+
+            if (bossState == BossState.stateAngry) {
+                patternACoolCurr = patternACoolBase;
+            }
+
             bossState = BossState.stateFurious;
-
-            patternACoolBase = 1;
-            patternASpeed = 1.5f * projSpeedBase;
-
-            patternBCoolBase = 2;
-            patternBSpeed = 2 * projSpeedBase;
         }
 
         //  Part - State Rage Monster
         else if (bossHealthPer <= 0.10f) {
+            patternACoolBase = 3;
+
+            if (bossState == BossState.stateFurious) {
+                patternACoolCurr = patternACoolBase;
+            }
+
             bossState = BossState.stateRageMonster;
-
-            patternACoolBase = 1;
-            patternASpeed = 2 * projSpeedBase;
-
-            patternBCoolBase = 1;
-            patternBSpeed = 2 * projSpeedBase;
         }
     }
 
-    //  SubMethod of Update - Attack Pattern A - Circle Attack
-    private void AttackPatternA() {
+    //  Methods - Attack Pattern A - Circle Attack
+    private void AttackPatternA(int pType, float pNum) {
         if (patternACoolCurr <= 0) {
             patternACoolCurr = patternACoolBase;
 
-            float projAngle = 360 / patternANum;
+            switch (pType) {
+                //  Part - Single Round
+                case 1:
+                    AttackActualA(pNum, projSpeedBase);
+                    break;
 
-            for (int i = 0; i < patternANum; i++) {
-                temp = Instantiate(projPrefab, transform.position, Quaternion.identity, projContainer.transform);
-                temp.GetComponent<BossProjectile>().SetupProjectile(new Vector3(Mathf.Cos(i * projAngle), 0, Mathf.Sin(i * projAngle)), patternASpeed, 1);
+                //  Part - Double Round
+                case 2:
+                    AttackActualA(pNum, projSpeedBase);
+                    AttackActualA(pNum, projSpeedBase * 0.9f);
+                    break;
+
+                //  Part - Triple Round
+                case 3:
+                    AttackActualA(pNum, projSpeedBase);
+                    AttackActualA(pNum, projSpeedBase * 0.9f);
+                    AttackActualA(pNum, projSpeedBase * 0.8f);
+                    break;
             }
         }
 
@@ -170,24 +170,38 @@ public class BossControl : MonoBehaviour {
         }
     }
 
-    //  SubMethod of Update - Attack Pattern B - Spray Attack
-    private void AttackPatternB() {
+    private void AttackActualA(float pNum, float pSpeed) {
+        float projAngle = 360 / pNum;
+
+        for (int i = 0; i < pNum; i++) {
+            temp = Instantiate(projPrefab, transform.position, Quaternion.identity, projContainer.transform);
+            temp.GetComponent<BossProjectile>().SetupProjectile(new Vector3(Mathf.Cos(i * projAngle), 0, Mathf.Sin(i * projAngle)), pSpeed, 1);
+        }
+    }
+
+    //  Methods - Attack Pattern B - Spray Attack
+    private void AttackPatternB(int pType) {
         if (patternBCoolCurr <= 0) {
             patternBCoolCurr = patternBCoolBase;
 
-            float angle = Mathf.Atan2(playerRef.transform.position.z - transform.position.z, playerRef.transform.position.x - transform.position.x);
+            switch (pType) {
+                //  Part - Triple Fire
+                case 1:
+                    AttackActualB(3, projSpeedBase);
+                    break;
 
-            //  Part - S Projectile
-            temp = Instantiate(projPrefab, transform.position, Quaternion.identity, projContainer.transform);
-            temp.GetComponent<BossProjectile>().SetupProjectile(new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)), patternBSpeed, 1);
+                //  Part - Penta Fire
+                case 2:
+                    AttackActualB(5, projSpeedBase);
+                    break;
 
-            //  Part - SSE Projectile
-            temp = Instantiate(projPrefab, transform.position, Quaternion.identity, projContainer.transform);
-            temp.GetComponent<BossProjectile>().SetupProjectile(new Vector3(Mathf.Cos(angle - .1f), 0, Mathf.Sin(angle - .1f)), patternBSpeed, 1);
-
-            //  Part - SSW Projectile
-            temp = Instantiate(projPrefab, transform.position, Quaternion.identity, projContainer.transform);
-            temp.GetComponent<BossProjectile>().SetupProjectile(new Vector3(Mathf.Cos(angle + .1f), 0, Mathf.Sin(angle + .1f)), patternBSpeed, 1);
+                //  Part - Three Triple Fire
+                case 3:
+                    AttackActualB(3, projSpeedBase);
+                    AttackActualB(3, projSpeedBase * 0.9f);
+                    AttackActualB(3, projSpeedBase * 0.8f);
+                    break;
+            }
         }
 
         else {
@@ -195,11 +209,38 @@ public class BossControl : MonoBehaviour {
         }
     }
 
+    private void AttackActualB(int pNum, float pSpeed) {
+        float angle = Mathf.Atan2(playerRef.transform.position.z - transform.position.z, playerRef.transform.position.x - transform.position.x);
+        float startDiff = 0;
+
+        switch (pNum) {
+            //  Part - Triple Fire
+            case 3:
+                startDiff = -.1f;
+
+                for (int i = 0; i < pNum; i++) {
+                    temp = Instantiate(projPrefab, transform.position, Quaternion.identity, projContainer.transform);
+                    temp.GetComponent<BossProjectile>().SetupProjectile(new Vector3(Mathf.Cos(angle + startDiff + (.1f * i)), 0, Mathf.Sin(angle + startDiff + (.1f * i))), pSpeed, 1);
+                }
+                break;
+
+            //  Part - Penta Fire
+            case 5:
+                startDiff = -.2f;
+
+                for (int i = 0; i < pNum; i++) {
+                    temp = Instantiate(projPrefab, transform.position, Quaternion.identity, projContainer.transform);
+                    temp.GetComponent<BossProjectile>().SetupProjectile(new Vector3(Mathf.Cos(angle + startDiff + (.1f * i)), 0, Mathf.Sin(angle + startDiff + (.1f * i))), pSpeed, 1);
+                }
+                break;
+        }
+    }
+
     //  MainMethod - Take Damage (param Damage)
     public void TakeDamage(int pDamage) {
         bossHealthCurr -= pDamage;
-        if(bossHealthCurr <= 0.01f)
-        {
+
+        if (bossHealthCurr <= 0.01f) {
             GameManager.instance.GameWon();
         }
     }
