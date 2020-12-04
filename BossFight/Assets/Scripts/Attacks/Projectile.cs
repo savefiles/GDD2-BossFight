@@ -34,6 +34,7 @@ public class Projectile : MonoBehaviour
     // When this object enters another collider, act accordingly.
     private void OnTriggerEnter(UnityEngine.Collider other)
     {
+        GameObject thisGameObject = gameObject;
         switch(other.gameObject.layer)
         {
             case GameManager.PLAYER_LAYER:
@@ -45,6 +46,7 @@ public class Projectile : MonoBehaviour
                 DestroyThis();
                 break;
             case GameManager.SOLID_LAYER:
+                if(other.GetComponent<Destroyable>() != null) other.GetComponent<Destroyable>().Hit(Destroyable.HitType.Projectile);
                 DestroyThis();
                 break;
         }

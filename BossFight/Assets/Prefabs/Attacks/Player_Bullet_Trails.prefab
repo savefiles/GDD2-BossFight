@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 631510856353527142}
   - component: {fileID: 631510856353527143}
   - component: {fileID: 8670122961722605496}
+  - component: {fileID: -4618714267173948439}
   m_Layer: 0
   m_Name: Player_Bullet_Trails
   m_TagString: Untagged
@@ -113,6 +114,22 @@ MonoBehaviour:
   acceleration: 0
   maxLifeSpan: 5
   damage: 1
+--- !u!54 &-4618714267173948439
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 631510856353527136}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 4
+  m_CollisionDetection: 0
 --- !u!1 &4818755700081148261
 GameObject:
   m_ObjectHideFlags: 0

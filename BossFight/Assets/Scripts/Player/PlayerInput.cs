@@ -144,7 +144,7 @@ public class PlayerInput
         if (m_player.isInAnimation) return;
 
         // Calculate the new angle/forward vector.
-        var newForward = m_player.forwardVector.normalized;
+        var newForward = m_player.forwardVector.normalized + new Vector3(0.0f, 0.5f, 0.0f);
         var angle = Mathf.Atan2(newForward.z, newForward.x) * Mathf.Rad2Deg;
 
         // Calculate the bullet position.
