@@ -28,7 +28,7 @@ public class PlayerInput
     float m_cooldownMeleeCurr;
     float m_cooldownShieldMin = 3.0f;
     float m_cooldownShieldDur = 1.0f;
-    float m_cooldownShieldCurr;
+    float m_cooldownShieldCurr = 3.0f;
     public float ShieldCooldown => Mathf.Min(m_cooldownShieldCurr/m_cooldownShieldMin, 1.0f);
 
 

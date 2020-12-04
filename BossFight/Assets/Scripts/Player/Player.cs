@@ -31,7 +31,8 @@ public class Player : MonoBehaviour
     public float playerHealthBase;
     public float playerHealthCurr;
     public float playerHealthPer => (playerHealthCurr / playerHealthBase);
-    public float Health { get; private set; } = 10.0f;
+    private float m_IFramesCooldown = 0.6f;
+    private float m_IFramesCurr = 0.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -44,20 +45,26 @@ public class Player : MonoBehaviour
         playerHealthBase = 10;
         playerHealthCurr = playerHealthBase;
 
-    // Get scene references.
-    gManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        // Get scene references.
+        gManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         pInput.Update();
+        m_IFramesCurr += Time.deltaTime;
     }
 
     // As the name suggests, deal damage to the player.
     public void TakeDamage(float damage)
     {
-        playerHealthCurr -= damage;
+        if(m_IFramesCurr > m_IFramesCooldown)
+        {
+            playerHealthCurr -= damage;
+            m_IFramesCurr = 0.0f;
+        }
+
         //Debug.Log("oof");
     }
 }
