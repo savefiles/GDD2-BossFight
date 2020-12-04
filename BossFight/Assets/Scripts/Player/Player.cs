@@ -9,7 +9,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     // Private references
-    public PlayerInput pInput;
+    public PlayerInputs pInput;
     private PlayerManager pManager;
     private GameManager gManager;
 
@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         // Instantiate variables.
-        pInput = new PlayerInput(this);
+        pInput = new PlayerInputs(this);
         pManager = new PlayerManager();
         forwardVector = gameObject.transform.right;
         
@@ -65,6 +65,10 @@ public class Player : MonoBehaviour
             m_IFramesCurr = 0.0f;
         }
 
-        //Debug.Log("oof");
+        // Player is dead, call game over.
+        if(playerHealthCurr <= 0.01f)
+        {
+            GameManager.instance.GameOver();
+        }
     }
 }

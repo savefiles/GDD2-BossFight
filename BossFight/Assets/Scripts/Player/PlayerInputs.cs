@@ -4,7 +4,7 @@ using System.Collections;
 
 // Class that deals with the inputs regarding the player
 // - Movement, attacks, etc.
-public class PlayerInput
+public class PlayerInputs
 {
     // The player that this input is attached to.
     Player m_player;
@@ -37,7 +37,7 @@ public class PlayerInput
     Vector3 m_distToCamera = new Vector3(0.0f, 16.0f, 0.0f);
     float m_forceMultiplier = 100.0f;
 
-    public PlayerInput(Player player)
+    public PlayerInputs(Player player)
     {
         m_player = player;
         m_pRigid = m_player.GetComponent<Rigidbody>();

@@ -18,7 +18,6 @@ public class PlayerMelee : MonoBehaviour
 
     // Damage related vars
     int m_iDamage = 20;
-    bool m_bHasDealtDamage = false;
 
     // Calculated variables
     float m_fMiddleAngle;
@@ -26,6 +25,7 @@ public class PlayerMelee : MonoBehaviour
     float m_fEndAngle;
     float m_fTimeSinceSpawn;
     float m_fNonSwingPhaseTime;
+
 
     // Start is called before the first frame update
     void Start()
@@ -44,7 +44,7 @@ public class PlayerMelee : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         float angle;
         m_fTimeSinceSpawn += Time.deltaTime;
@@ -89,14 +89,15 @@ public class PlayerMelee : MonoBehaviour
     // When this object enters another collider, act accordingly.
     private void OnTriggerEnter(UnityEngine.Collider other)
     {
-        if(m_bHasDealtDamage) return;
-
         switch (other.gameObject.layer)
         {
             case GameManager.ENEMY_LAYER:
                 other.gameObject.GetComponent<BossControl>().TakeDamage(m_iDamage);
-                m_bHasDealtDamage = true;
+                break;
+            case GameManager.SOLID_LAYER:
+                if(other.GetComponent<Destroyable>() != null) other.GetComponent<Destroyable>().Hit(Destroyable.HitType.Melee);
                 break;
         }
+
     }
 }

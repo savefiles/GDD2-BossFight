@@ -61,7 +61,7 @@ public class BossControl : MonoBehaviour {
     }
 
     //  MainMethod - Update
-    void Update() {
+    void FixedUpdate() {
         LifeCheck();
 
         switch (bossState) {
@@ -198,5 +198,9 @@ public class BossControl : MonoBehaviour {
     //  MainMethod - Take Damage (param Damage)
     public void TakeDamage(int pDamage) {
         bossHealthCurr -= pDamage;
+        if(bossHealthCurr <= 0.01f)
+        {
+            GameManager.instance.GameWon();
+        }
     }
 }

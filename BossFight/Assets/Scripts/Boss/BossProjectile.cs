@@ -21,7 +21,7 @@ public class BossProjectile : MonoBehaviour {
     }
 
     //  MainMethod - Update
-    void Update() {
+    void FixedUpdate() {
         if (projHealth > 0) {
             projHealth -= Time.deltaTime;
             MoveControl();

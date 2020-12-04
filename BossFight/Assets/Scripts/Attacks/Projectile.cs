@@ -20,7 +20,7 @@ public class Projectile : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         float dt = Time.deltaTime;
         Move(dt);
@@ -38,7 +38,7 @@ public class Projectile : MonoBehaviour
         switch(other.gameObject.layer)
         {
             case GameManager.PLAYER_LAYER:
-                // Deal damage to the player
+                other.GetComponent<Player>().TakeDamage(1.0f);
                 DestroyThis();
                 break;
             case GameManager.ENEMY_LAYER:

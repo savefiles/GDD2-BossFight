@@ -27,8 +27,8 @@ public class ScenesManager : MonoBehaviour
         s_inGame = SceneManager.GetSceneByBuildIndex(1);
 
         // Set the onclick of the level button
-        //GameObject.Find("Level 1 Button").GetComponent<Button>().onClick.AddListener(() => { PlayerPrefs.SetInt("Level", 0); LoadScene(1); });
-        GameObject.Find("Start Game Button").GetComponent<Button>().onClick.AddListener(() => { LoadScene(1); });
+        GameObject.Find("Tutorial Button").GetComponent<Button>().onClick.AddListener(() => { LoadScene(1); });
+        GameObject.Find("Start Game Button").GetComponent<Button>().onClick.AddListener(() => { LoadScene(2); });
 
         // Set the onclick of the quit game
         GameObject.Find("Quit Button").GetComponent<Button>().onClick.AddListener(() => { Application.Quit(); });
