@@ -63,22 +63,27 @@ public class BossControl : MonoBehaviour {
         switch (bossState) {
             case BossState.stateAmused:
                 AttackPatternA(1, 12);
+                AttackPatternB(1);
                 break;
 
             case BossState.stateAnnoyed:
                 AttackPatternA(1, 24);
+                AttackPatternB(1);
                 break;
 
             case BossState.stateAngry:
                 AttackPatternA(2, 12);
+                AttackPatternB(2);
                 break;
 
             case BossState.stateFurious:
                 AttackPatternA(2, 24);
+                AttackPatternB(2);
                 break;
 
             case BossState.stateRageMonster:
                 AttackPatternA(3, 24);
+                AttackPatternB(3);
                 break;
         }
     }
@@ -90,6 +95,7 @@ public class BossControl : MonoBehaviour {
         //  Part - State Amused
         if (bossHealthPer >= 0.90f) {
             patternACoolBase = 2;
+            patternBCoolBase = 2;
 
             bossState = BossState.stateAmused;
         }
@@ -97,9 +103,11 @@ public class BossControl : MonoBehaviour {
         //  Part - State Annoyed
         else if (bossHealthPer >= 0.70f) {
             patternACoolBase = 3;
+            patternBCoolBase = 1;
 
             if (bossState == BossState.stateAmused) {
                 patternACoolCurr = patternACoolBase;
+                patternBCoolCurr = patternBCoolBase;
             }
 
             bossState = BossState.stateAnnoyed;
@@ -108,9 +116,11 @@ public class BossControl : MonoBehaviour {
         //  Part - State Angry
         else if (bossHealthPer >= 0.50f) {
             patternACoolBase = 2;
+            patternBCoolBase = 2;
 
             if (bossState == BossState.stateAnnoyed) {
                 patternACoolCurr = patternACoolBase;
+                patternBCoolCurr = patternBCoolBase;
             }
 
             bossState = BossState.stateAngry;
@@ -119,9 +129,11 @@ public class BossControl : MonoBehaviour {
         //  Part - State Furious
         else if (bossHealthPer >= 0.30f) {
             patternACoolBase = 3;
+            patternBCoolBase = 1;
 
             if (bossState == BossState.stateAngry) {
                 patternACoolCurr = patternACoolBase;
+                patternBCoolCurr = patternBCoolBase;
             }
 
             bossState = BossState.stateFurious;
@@ -130,9 +142,11 @@ public class BossControl : MonoBehaviour {
         //  Part - State Rage Monster
         else if (bossHealthPer <= 0.10f) {
             patternACoolBase = 3;
+            patternBCoolBase = 2;
 
             if (bossState == BossState.stateFurious) {
                 patternACoolCurr = patternACoolBase;
+                patternBCoolCurr = patternBCoolBase;
             }
 
             bossState = BossState.stateRageMonster;
@@ -187,19 +201,19 @@ public class BossControl : MonoBehaviour {
             switch (pType) {
                 //  Part - Triple Fire
                 case 1:
-                    AttackActualB(3, projSpeedBase);
+                    AttackActualB(3, 2 * projSpeedBase);
                     break;
 
                 //  Part - Penta Fire
                 case 2:
-                    AttackActualB(5, projSpeedBase);
+                    AttackActualB(5, 2 * projSpeedBase);
                     break;
 
                 //  Part - Three Triple Fire
                 case 3:
-                    AttackActualB(3, projSpeedBase);
-                    AttackActualB(3, projSpeedBase * 0.9f);
-                    AttackActualB(3, projSpeedBase * 0.8f);
+                    AttackActualB(3, 2 * projSpeedBase);
+                    AttackActualB(3, 2 * projSpeedBase * 0.9f);
+                    AttackActualB(3, 2 * projSpeedBase * 0.8f);
                     break;
             }
         }
