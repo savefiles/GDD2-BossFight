@@ -27,15 +27,15 @@ public class ScenesManager : MonoBehaviour
         s_inGame = SceneManager.GetSceneByBuildIndex(1);
 
         // Set the onclick of the level button
-        GameObject.Find("Level 1 Button").GetComponent<Button>().onClick.AddListener(() => { PlayerPrefs.SetInt("Level", 0); LoadScene(1); });
-        GameObject.Find("Level 2 Button").GetComponent<Button>().onClick.AddListener(() => { PlayerPrefs.SetInt("Level", 1); LoadScene(1); });
+        //GameObject.Find("Level 1 Button").GetComponent<Button>().onClick.AddListener(() => { PlayerPrefs.SetInt("Level", 0); LoadScene(1); });
+        GameObject.Find("Start Game Button").GetComponent<Button>().onClick.AddListener(() => { LoadScene(1); });
 
         // Set the onclick of the quit game
         GameObject.Find("Quit Button").GetComponent<Button>().onClick.AddListener(() => { Application.Quit(); });
 
         // Set the onclick of both resume buttons
         GameObject.Find("Credits Button").GetComponent<Button>().onClick.AddListener(() => { ToggleCredits(); });
-        credits.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(() => { ToggleCredits(); });
+        credits.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => { ToggleCredits(); });
     }
 
     // Update is called once per frame
@@ -51,6 +51,7 @@ public class ScenesManager : MonoBehaviour
 
     public void ToggleCredits()
     {
+        Debug.Log("Clicked");
         isCreditsDisplayed = !isCreditsDisplayed;
         credits.SetActive(isCreditsDisplayed);
     }
