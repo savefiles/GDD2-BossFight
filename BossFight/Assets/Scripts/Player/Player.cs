@@ -10,7 +10,6 @@ public class Player : MonoBehaviour
 {
     // Private references
     public PlayerInputs pInput;
-    private PlayerManager pManager;
     private GameManager gManager;
 
     // The camera that follows the player
@@ -39,10 +38,9 @@ public class Player : MonoBehaviour
     {
         // Instantiate variables.
         pInput = new PlayerInputs(this);
-        pManager = new PlayerManager();
         forwardVector = gameObject.transform.right;
         
-        playerHealthBase = 10;
+        playerHealthBase = 5;
         playerHealthCurr = playerHealthBase;
 
         // Get scene references.

@@ -50,7 +50,7 @@ public class BossControl : MonoBehaviour {
     private void Start() {
         projContainer = transform.parent.GetChild(1).gameObject;
 
-        bossHealthBase = 100;
+        bossHealthBase = 200;
         bossHealthCurr = bossHealthBase;
 
         playerRef = GameObject.Find("Player").transform.GetChild(0).gameObject;
