@@ -17,7 +17,7 @@ public class PlayerMelee : MonoBehaviour
     float m_fTotalSwingTime = 0.5f;         // Seconds
 
     // Damage related vars
-    int m_iDamage = 20;
+    int m_iDamage = 10;
 
     // Calculated variables
     float m_fMiddleAngle;

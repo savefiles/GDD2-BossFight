@@ -50,7 +50,7 @@ public class BossControl : MonoBehaviour {
     private void Start() {
         projContainer = transform.parent.GetChild(1).gameObject;
 
-        bossHealthBase = 200;
+        bossHealthBase = 150;
         bossHealthCurr = bossHealthBase;
 
         playerRef = GameObject.Find("Player").transform.GetChild(0).gameObject;
@@ -94,7 +94,7 @@ public class BossControl : MonoBehaviour {
 
         //  Part - State Amused
         if (bossHealthPer >= 0.90f) {
-            patternACoolBase = 2;
+            patternACoolBase = 3.0f;
             patternBCoolBase = 2;
 
             bossState = BossState.stateAmused;
@@ -102,13 +102,13 @@ public class BossControl : MonoBehaviour {
 
         //  Part - State Annoyed
         else if (bossHealthPer >= 0.70f) {
-            patternACoolBase = 3;
+            patternACoolBase = 2.4f;
             patternBCoolBase = 1;
 
-            if (bossState == BossState.stateAmused) {
-                patternACoolCurr = patternACoolBase;
-                patternBCoolCurr = patternBCoolBase;
-            }
+            //if (bossState == BossState.stateAmused) {
+            //    patternACoolCurr = patternACoolBase;
+            //    patternBCoolCurr = patternBCoolBase;
+            //}
 
             bossState = BossState.stateAnnoyed;
         }
@@ -116,38 +116,38 @@ public class BossControl : MonoBehaviour {
         //  Part - State Angry
         else if (bossHealthPer >= 0.50f) {
             patternACoolBase = 2;
-            patternBCoolBase = 2;
+            patternBCoolBase = 1.6f;
 
-            if (bossState == BossState.stateAnnoyed) {
-                patternACoolCurr = patternACoolBase;
-                patternBCoolCurr = patternBCoolBase;
-            }
+            //if (bossState == BossState.stateAnnoyed) {
+            //    patternACoolCurr = patternACoolBase;
+            //    patternBCoolCurr = patternBCoolBase;
+            //}
 
             bossState = BossState.stateAngry;
         }
 
         //  Part - State Furious
         else if (bossHealthPer >= 0.30f) {
-            patternACoolBase = 3;
+            patternACoolBase = 1.8f;
             patternBCoolBase = 1;
 
-            if (bossState == BossState.stateAngry) {
-                patternACoolCurr = patternACoolBase;
-                patternBCoolCurr = patternBCoolBase;
-            }
+            //if (bossState == BossState.stateAngry) {
+            //    patternACoolCurr = patternACoolBase;
+            //    patternBCoolCurr = patternBCoolBase;
+            //}
 
             bossState = BossState.stateFurious;
         }
 
         //  Part - State Rage Monster
-        else if (bossHealthPer <= 0.10f) {
-            patternACoolBase = 3;
+        else {
+            patternACoolBase = 1.8f;
             patternBCoolBase = 2;
 
-            if (bossState == BossState.stateFurious) {
-                patternACoolCurr = patternACoolBase;
-                patternBCoolCurr = patternBCoolBase;
-            }
+            //if (bossState == BossState.stateFurious) {
+            //    patternACoolCurr = patternACoolBase;
+            //    patternBCoolCurr = patternBCoolBase;
+            //}
 
             bossState = BossState.stateRageMonster;
         }
