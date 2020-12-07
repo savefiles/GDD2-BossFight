@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     public float playerHealthBase;
     public float playerHealthCurr;
     public float playerHealthPer => (playerHealthCurr / playerHealthBase);
-    private float m_IFramesCooldown = 0.6f;
+    private float m_IFramesCooldown = 0.3f;
     private float m_IFramesCurr = 0.0f;
 
     // Start is called before the first frame update

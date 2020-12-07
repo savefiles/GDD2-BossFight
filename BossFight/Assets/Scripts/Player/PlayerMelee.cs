@@ -26,6 +26,8 @@ public class PlayerMelee : MonoBehaviour
     float m_fTimeSinceSpawn;
     float m_fNonSwingPhaseTime;
 
+    // Only hit the boss once.
+    bool m_hasHitBoss = false;
 
     // Start is called before the first frame update
     void Start()
@@ -92,7 +94,9 @@ public class PlayerMelee : MonoBehaviour
         switch (other.gameObject.layer)
         {
             case GameManager.ENEMY_LAYER:
+                if(m_hasHitBoss) return;
                 other.gameObject.GetComponent<BossControl>().TakeDamage(m_iDamage);
+                m_hasHitBoss = true;
                 break;
             case GameManager.SOLID_LAYER:
                 if(other.GetComponent<Destroyable>() != null) other.GetComponent<Destroyable>().Hit(Destroyable.HitType.Melee);
