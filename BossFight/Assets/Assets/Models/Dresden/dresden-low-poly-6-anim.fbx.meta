@@ -48,6 +48,9 @@ ModelImporter:
   - first:
       74: -8079800386460014158
     second: Armature|sprint
+  - first:
+      74: -6029081278301059481
+    second: Armature|pistol_strafeR (1)
   externalObjects: {}
   materials:
     materialImportMode: 1
