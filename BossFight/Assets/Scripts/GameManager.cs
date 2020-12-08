@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
     {
         // Stop time, update point counter, show menu.
         gameOverMenu.SetActive(true);
-        gameOverMenu.transform.GetChild(0).GetComponent<Text>().text = "You win!";
+        gameOverMenu.transform.GetChild(1).GetComponent<Text>().text = "You win!";
         Time.timeScale = 0.0f;
     }
 }
