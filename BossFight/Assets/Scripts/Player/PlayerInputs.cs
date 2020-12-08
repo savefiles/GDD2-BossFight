@@ -9,17 +9,18 @@ public class PlayerInputs
     // The player that this input is attached to.
     Player m_player;
     Rigidbody m_pRigid;
+    public Animator animator;
 
     // The keyboard that is currently being used (might not be necessary)
     Keyboard m_keyboard;
 
     // The controls for the different actions a player can take.
     InputActionMap m_actionMap;
-    InputAction m_actionMove;
+    public InputAction m_actionMove;
     InputAction m_actionLook;
     InputAction m_actionShoot;
     InputAction m_actionMelee;
-    InputAction m_actionShield;
+    public InputAction m_actionShield;
 
     // Action cooldowns (seconds)
     float m_cooldownShootMin = 0.3f;
@@ -29,6 +30,10 @@ public class PlayerInputs
     float m_cooldownShieldMin = 3.0f;
     float m_cooldownShieldDur = 1.0f;
     float m_cooldownShieldCurr = 3.0f;
+
+    public float yTarget;
+    public float xTarget;
+
     public float ShieldCooldown => Mathf.Min(m_cooldownShieldCurr/m_cooldownShieldMin, 1.0f);
 
 
@@ -37,11 +42,11 @@ public class PlayerInputs
     Vector3 m_distToCamera = new Vector3(0.0f, 16.0f, 0.0f);
     float m_forceMultiplier = 100.0f;
 
-    public PlayerInputs(Player player)
+    public PlayerInputs(Player player, Animator anime)
     {
         m_player = player;
         m_pRigid = m_player.GetComponent<Rigidbody>();
-        
+        animator = anime;
         m_keyboard = Keyboard.current;
         CreateInputMap();
     }
@@ -75,7 +80,8 @@ public class PlayerInputs
         if (m_player.isInAnimation) { return; }
         RotatePlayer();
 
-        
+        animator.SetFloat("y", yTarget);
+        animator.SetFloat("x", xTarget);
     }
 
 
@@ -122,6 +128,14 @@ public class PlayerInputs
                                                                * Time.deltaTime 
                                                                * m_forceMultiplier, 
                                                                ForceMode.VelocityChange);
+        animator.SetBool("isMoving", true);
+        yTarget = Mathf.MoveTowards(yTarget, input.y, .05f);
+        xTarget = Mathf.MoveTowards(xTarget, input.x, .05f);
+
+        if(Mathf.Abs(input.x) < .1 && Mathf.Abs(input.y) < .1)
+        {
+            animator.SetBool("isMoving", false);
+        }
     }
 
     private void RotatePlayer()
@@ -175,7 +189,7 @@ public class PlayerInputs
         if (m_player.isInAnimation == true) yield break;
         if (m_cooldownShieldCurr < m_cooldownShieldMin) yield break;
         m_cooldownShieldCurr = 0.0f;
-
+        animator.SetBool("isBlocking", true);
         // Instatiate the shield prefab.
         GameObject shield = GameObject.Instantiate(m_player.prefabShield, m_player.transform);
 
@@ -193,6 +207,7 @@ public class PlayerInputs
         // Give the player control again.
         m_player.isInAnimation = false;
         m_player.moveSpeedModifier = 1.0f;
+        animator.SetBool("isBlocking", false);
     }
 
     // Helper function to update the cooldown member variables.

@@ -33,11 +33,13 @@ public class Player : MonoBehaviour
     private float m_IFramesCooldown = 0.3f;
     private float m_IFramesCurr = 0.0f;
 
+    public Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
         // Instantiate variables.
-        pInput = new PlayerInputs(this);
+        pInput = new PlayerInputs(this, animator);
         forwardVector = gameObject.transform.right;
         
         playerHealthBase = 5;

@@ -158,6 +158,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projPrefab: {fileID: 1178541380857920482, guid: 92e54be50d256f343ba74547259a9b36,
     type: 3}
+  bossHealthBase: 0
+  bossHealthCurr: 0
 --- !u!1 &6523798665331595242
 GameObject:
   m_ObjectHideFlags: 0
